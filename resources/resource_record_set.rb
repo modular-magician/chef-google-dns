@@ -33,9 +33,9 @@ require 'google/dns/network/delete'
 require 'google/dns/network/get'
 require 'google/dns/network/post'
 require 'google/dns/network/put'
-require 'google/dns/property/enum'
 require 'google/dns/property/integer'
 require 'google/dns/property/managedzone_name'
+require 'google/dns/property/resource_record_set_type'
 require 'google/dns/property/string'
 require 'google/dns/property/string_array'
 require 'google/hash_utils'
@@ -53,7 +53,7 @@ module Google
                name_property: true, desired_state: true
       property :type,
                equal_to: %w[A AAAA CAA CNAME MX NAPTR NS PTR SOA SPF SRV TXT],
-               coerce: ::Google::Dns::Property::Enum.coerce, desired_state: true
+               coerce: ::Google::Dns::Property::TypeEnum.coerce, desired_state: true
       property :ttl, Integer, coerce: ::Google::Dns::Property::Integer.coerce, desired_state: true
       # target is Array of Google::Dns::Property::StringArray
       property :target
@@ -84,7 +84,7 @@ module Google
         else
           @current_resource = @new_resource.clone
           @current_resource.rrs_label = ::Google::Dns::Property::String.api_parse(fetch['name'])
-          @current_resource.type = ::Google::Dns::Property::Enum.api_parse(fetch['type'])
+          @current_resource.type = ::Google::Dns::Property::TypeEnum.api_parse(fetch['type'])
           @current_resource.ttl = ::Google::Dns::Property::Integer.api_parse(fetch['ttl'])
           @current_resource.target =
             ::Google::Dns::Property::StringArray.api_parse(fetch['rrdatas'])
