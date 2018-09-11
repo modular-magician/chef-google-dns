@@ -202,24 +202,6 @@ A project resource. The project is a top level container for resources
 including Cloud DNS ManagedZones.
 
 
-#### Example
-
-```ruby
-# Ensures a project exists and has the correct values.
-#
-# All project settings are read-only, yet we are setting them anyway. Chef will
-# use these values to check if they match, and fail the run otherwise.
-#
-# This important to ensure that your project quotas are set properly and avoid
-# discrepancies from it to fail in production.
-gdns_project 'google.com:graphite-playground' do
-  quota_managed_zones 10_000
-  quota_total_rrdata_size_per_change 100_000
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
-```
 
 #### Reference
 
@@ -239,15 +221,6 @@ gdns_project 'id-for-resource' do
 end
 ```
 
-#### Actions
-
-* `create` -
-  Converges the `gdns_project` resource into the final
-  state described within the block. If the resource does not exist, Chef will
-  attempt to create it.
-* `delete` -
-  Ensures the `gdns_project` resource is not present.
-  If the resource already exists Chef will attempt to delete it.
 
 #### Properties
 
